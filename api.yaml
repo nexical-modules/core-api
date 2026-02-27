@@ -1,0 +1,8 @@
+Root:
+  - path: /schema
+    verb: GET
+    method: schema
+    summary: Returns the aggregated OpenAPI schema.
+    role: anonymous
+    input: none
+    output: unknown
