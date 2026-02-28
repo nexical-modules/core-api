@@ -1,15 +1,16 @@
+// GENERATED CODE - DO NOT MODIFY
 import { BaseResource, ApiClient } from '@nexical/sdk-core';
-import { CoreDocSDK as BaseCoreDocSDK } from './core-doc-sdk.js';
+import { RootSDK as BaseRootSDK } from './root-sdk.js';
+
+export * from './types.js';
+export * from './root-sdk.js';
 
 /** Main SDK for the core-api module. */
 export class CoreModule extends BaseResource {
-  public coreDoc: BaseCoreDocSDK;
+  public root: BaseRootSDK;
 
   constructor(client: ApiClient) {
     super(client);
-    this.coreDoc = new BaseCoreDocSDK(client);
+    this.root = new BaseRootSDK(client);
   }
 }
-
-export * from './core-doc-sdk.js';
-export * from './types.js';
