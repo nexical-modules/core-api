@@ -34,7 +34,7 @@ export const GET = defineApi(
       return new Response(JSON.stringify({ error: filteredResult.error }), { status: 400 });
     }
 
-    return { success: true, data: filteredResult.data };
+    return (filteredResult as any).data;
   },
   {
     summary: 'Returns the aggregated OpenAPI schema.',

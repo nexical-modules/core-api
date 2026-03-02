@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { GET } from '../../../src/pages/schema';
+import { GET } from '../../../src/pages/api/schema';
 import { ModuleDiscovery, type LoadedModule } from '@/lib/modules/module-discovery';
 import { generateDocs } from '@/lib/api/api-docs';
 import type { APIContext } from 'astro';
