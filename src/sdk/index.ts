@@ -8,6 +8,7 @@ export * from './root-sdk.js';
 /** Main SDK for the core-api module. */
 export class CoreModule extends BaseResource {
   public root: BaseRootSDK;
+  public static readonly roles: Record<string, string> = {};
 
   constructor(client: ApiClient) {
     super(client);
