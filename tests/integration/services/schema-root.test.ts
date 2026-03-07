@@ -1,3 +1,4 @@
+// INITIAL GENERATED CODE - REVIEW AND MODIFY AS NEEDED FOR SERVICE INTEGRATION TESTS
 import { describe, it, expect } from 'vitest';
 import { SchemaRootAction } from '../../../src/actions/schema-root';
 import { createMockContext } from '../../../../../tests/integration/helpers/context';
