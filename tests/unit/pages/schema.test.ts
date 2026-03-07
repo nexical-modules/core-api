@@ -33,13 +33,18 @@ vi.mock('@/lib/api/api-docs', async (importOriginal) => {
   };
 });
 
-vi.mock('@/lib/core/config', () => ({
-  config: {
-    PUBLIC_SITE_NAME: 'Test Site',
-    PUBLIC_SITE_VERSION: '1.0.0',
-    PUBLIC_API_DESCRIPTION: 'Test API',
-  },
-}));
+vi.mock('@/lib/core/config', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@/lib/core/config')>();
+  return {
+    ...actual,
+    config: {
+      PUBLIC_SITE_NAME: 'Test Site',
+      PUBLIC_SITE_VERSION: '1.0.0',
+      PUBLIC_API_DESCRIPTION: 'Test API',
+      PUBLIC_API_URL: 'http://localhost:4321/api',
+    },
+  };
+});
 
 describe('API Schema Endpoint', () => {
   beforeEach(() => {
@@ -81,12 +86,14 @@ describe('API Schema Endpoint', () => {
     const data = await response.json();
 
     // Check basic info
-    expect(data.openapi).toBe('3.0.0');
-    expect(data.info.title).toBe('Test Site');
-    expect(data.info.version).toBe('1.0.0');
+    expect(data.success).toBe(true);
+    const schema = data.data;
+    expect(schema.openapi).toBe('3.0.0');
+    expect(schema.info.title).toBe('Test Site');
+    expect(schema.info.version).toBe('1.0.0');
 
     // Check paths merging (Core + Mod1 + Mod2)
-    expect(data.paths).toEqual({
+    expect(schema.paths).toEqual({
       '/core-path': { get: {} },
       '/path1': { get: {} },
       '/path2': { post: {} },

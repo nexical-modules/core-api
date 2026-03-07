@@ -4,6 +4,6 @@ import { BaseResource } from '@nexical/sdk-core';
 /** SDK client for Root. */
 export class RootSDK extends BaseResource {
   public async schema(): Promise<{ success: boolean; data: unknown; error?: string }> {
-    return this._request('GET', `${endpoint ? '/' + endpoint : ''}/schema`);
+    return this._request('GET', `/schema`);
   }
 }
