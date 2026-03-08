@@ -1,6 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY
 import type { APIContext, MiddlewareNext } from 'astro';
-
 export async function onRequest(context: APIContext, next: MiddlewareNext) {
   const publicRoutes: string[] = ['/schema'];
   if (publicRoutes.some((route) => context.url.pathname.startsWith(route))) return next();
