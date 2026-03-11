@@ -1,8 +1,8 @@
 // GENERATED CODE - DO NOT MODIFY
-import { BaseResource, ApiClient } from '@nexical/sdk-core';
+import { ApiClient, BaseResource } from '@nexical/sdk-core';
 import { RootSDK as BaseRootSDK } from './root-sdk.js';
-export * from './types.js';
 export * from './root-sdk.js';
+export * from './types.js';
 
 /** Main SDK for the core-api module. */
 export class CoreModule extends BaseResource {

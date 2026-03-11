@@ -1,7 +1,7 @@
 // INITIAL GENERATED CODE - REVIEW AND MODIFY AS NEEDED FOR SERVICE INTEGRATION TESTS
-import { describe, it, expect } from 'vitest';
-import { SchemaRootAction } from '../../../src/actions/schema-root';
+import { describe, expect, it } from 'vitest';
 import { createMockContext } from '../../../../../tests/integration/helpers/context';
+import { SchemaRootAction } from '../../../src/actions/schema-root';
 
 describe('SchemaRootAction - Service Integration', () => {
   it('should return the schema successfully', async () => {
