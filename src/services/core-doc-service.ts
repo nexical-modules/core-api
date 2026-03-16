@@ -2,7 +2,7 @@ import { ModuleDiscovery } from '@/lib/modules/module-discovery';
 import { config } from '@/lib/core/config';
 import { generateDocs, type ApiActor } from '@/lib/api/api-docs';
 
-export class CoreApiDocService {
+export class CoreDocService {
   /**
    * Generates the complete OpenAPI specification for the entire backend.
    */
