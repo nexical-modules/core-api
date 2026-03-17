@@ -1,4 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY
+import type { APIContext } from 'astro';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { CoreDocService } from '../../../src/actions/../services/core-doc-service';
 import { SchemaRootAction } from '../../../src/actions/schema-root';
@@ -233,7 +234,7 @@ describe('SchemaRootAction', () => {
         name: 'Test',
         role: 'TEAM_MEMBER',
       } as Record<string, unknown>,
-      mockContext as unknown as any,
+      mockContext as unknown as APIContext,
     );
     expect(result).toBeDefined();
   });
@@ -266,7 +267,7 @@ describe('SchemaRootAction', () => {
         email: 'test@example.com',
         name: 'Test',
       } as Record<string, unknown>,
-      mockContext as unknown as any,
+      mockContext as unknown as APIContext,
     );
     expect(result.success).toBe(true);
   });
@@ -297,7 +298,7 @@ describe('SchemaRootAction', () => {
         email: 'test@example.com',
         name: 'Test',
       } as Record<string, unknown>,
-      mockContext as unknown as any,
+      mockContext as unknown as APIContext,
     );
     expect(result.success).toBe(false);
   });

@@ -1,4 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY
+import type { APIContext } from 'astro';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { onRequest } from '../../src/middleware';
 
@@ -54,13 +55,19 @@ describe('Middleware: core-api', () => {
 
   it('should call next() for public routes', async () => {
     mockContext.url = new URL('http://localhost/api/health');
-    await onRequest(mockContext as unknown as any, mockNext as unknown as any);
+    await onRequest(
+      mockContext as unknown as APIContext,
+      mockNext as unknown as (context: APIContext) => Promise<Response>,
+    );
     expect(mockNext).toHaveBeenCalled();
   });
 
   it('should proceed even if unauthorized (Bouncer logic)', async () => {
     mockContext.request.headers.set('Authorization', 'Bearer invalid');
-    await onRequest(mockContext as unknown as any, mockNext as unknown as any);
+    await onRequest(
+      mockContext as unknown as APIContext,
+      mockNext as unknown as (context: APIContext) => Promise<Response>,
+    );
     expect(mockNext).toHaveBeenCalled();
   });
 });

@@ -1,4 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY
+import { Logger } from '@/lib/core/logger';
+import { HookSystem } from '@/lib/modules/hooks';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { CoreDocService } from '../../../src/services/core-doc-service';
 
@@ -52,31 +54,46 @@ vi.mock('@/lib/core/db', () => {
     return false;
   };
 
+  const baseMockModel = {
+    findMany: () => Promise.resolve([mockModelProps]),
+    findUnique: (args: { where: Record<string, unknown> }) => {
+      if (isExistenceCheck(args?.where) && !args?.where?.id) return null;
+      return {
+        ...(mockModelProps as Record<string, unknown>),
+        ...args?.where,
+      };
+    },
+    findFirst: (args: { where: Record<string, unknown> }) => {
+      if (isExistenceCheck(args?.where) && !args?.where?.id) return null;
+      return {
+        ...(mockModelProps as Record<string, unknown>),
+        ...args?.where,
+      };
+    },
+    create: () => Promise.resolve(mockModelProps),
+    update: () => Promise.resolve(mockModelProps),
+    delete: () => Promise.resolve(mockModelProps),
+    count: () => Promise.resolve(1),
+    upsert: () => Promise.resolve(mockModelProps),
+    updateMany: () => Promise.resolve({ count: 1 }),
+    deleteMany: () => Promise.resolve({ count: 1 }),
+    groupBy: () => Promise.resolve([{ _count: { id: 1 }, status: 'ACTIVE' }]),
+    aggregate: () => Promise.resolve({ _count: { id: 1 }, _avg: { value: 0 } }),
+  };
+
   const mockModel = {
-    findMany: vi.fn().mockResolvedValue([mockModelProps]),
-    findUnique: vi.fn().mockImplementation((args: { where: Record<string, unknown> }) => {
-      if (isExistenceCheck(args?.where) && !args?.where?.id) return null;
-      return {
-        ...(mockModelProps as Record<string, unknown>),
-        ...args?.where,
-      };
-    }),
-    findFirst: vi.fn().mockImplementation((args: { where: Record<string, unknown> }) => {
-      if (isExistenceCheck(args?.where) && !args?.where?.id) return null;
-      return {
-        ...(mockModelProps as Record<string, unknown>),
-        ...args?.where,
-      };
-    }),
-    create: vi.fn().mockResolvedValue(mockModelProps),
-    update: vi.fn().mockResolvedValue(mockModelProps),
-    delete: vi.fn().mockResolvedValue(mockModelProps),
-    count: vi.fn().mockResolvedValue(1),
-    upsert: vi.fn().mockResolvedValue(mockModelProps),
-    updateMany: vi.fn().mockResolvedValue({ count: 1 }),
-    deleteMany: vi.fn().mockResolvedValue({ count: 1 }),
-    groupBy: vi.fn().mockResolvedValue([{ _count: { id: 1 }, status: 'ACTIVE' }]),
-    aggregate: vi.fn().mockResolvedValue({ _count: { id: 1 }, _avg: { value: 0 } }),
+    findMany: vi.fn(),
+    findUnique: vi.fn(),
+    findFirst: vi.fn(),
+    create: vi.fn(),
+    update: vi.fn(),
+    delete: vi.fn(),
+    count: vi.fn(),
+    upsert: vi.fn(),
+    updateMany: vi.fn(),
+    deleteMany: vi.fn(),
+    groupBy: vi.fn(),
+    aggregate: vi.fn(),
     ...(mockModelProps as Record<string, unknown>),
   };
 
@@ -97,6 +114,18 @@ vi.mock('@/lib/core/db', () => {
     },
   };
 
+  const resetImplementations = () => {
+    Object.keys(baseMockModel).forEach((key) => {
+      (mockModel as Record<string, import('vitest').Mock>)[key].mockImplementation(
+        (baseMockModel as Record<string, unknown>)[key] as (...args: unknown[]) => unknown,
+      );
+    });
+  };
+
+  resetImplementations();
+
+  (globalThis as unknown as Record<string, () => void>)._resetCoreDocServiceMocks =
+    resetImplementations;
   return {
     db: new Proxy({}, handler),
   };
@@ -113,15 +142,29 @@ vi.mock('@/lib/core/logger', () => ({
 
 vi.mock('@/lib/modules/hooks', () => ({
   HookSystem: {
-    dispatch: vi.fn().mockResolvedValue(undefined),
-    filter: vi.fn().mockImplementation((name, data) => Promise.resolve(data)),
+    dispatch: vi.fn(),
+    filter: vi.fn(),
     on: vi.fn(),
   },
 }));
 
 describe('CoreDocService', () => {
   beforeEach(() => {
-    vi.clearAllMocks();
+    vi.resetAllMocks();
+    const globalAny = globalThis as unknown as Record<string, () => void>;
+    if (globalAny._resetCoreDocServiceMocks) {
+      globalAny._resetCoreDocServiceMocks();
+    }
+
+    // Restore HookSystem implementations
+    vi.mocked(HookSystem.dispatch).mockResolvedValue(undefined);
+    vi.mocked(HookSystem.filter).mockImplementation((_name, data) => Promise.resolve(data));
+
+    // Restore Logger implementations
+    vi.mocked(Logger.error).mockImplementation(() => {});
+    vi.mocked(Logger.info).mockImplementation(() => {});
+    vi.mocked(Logger.warn).mockImplementation(() => {});
+    vi.mocked(Logger.debug).mockImplementation(() => {});
   });
 
   describe('getFullSchema', () => {
@@ -169,8 +212,9 @@ describe('CoreDocService', () => {
         if (result && typeof result === 'object' && 'success' in result) {
           expect(result.success).toBe(false);
         }
-      } catch {
+      } catch (error) {
         // If it throws, that's also a valid error handling path
+        expect(error).toBeDefined();
       }
     });
   });

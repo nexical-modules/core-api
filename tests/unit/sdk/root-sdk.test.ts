@@ -11,7 +11,7 @@ describe('RootSDK', () => {
     mockClient = {
       request: vi.fn().mockResolvedValue({ success: true, data: { id: 'test-id' } }),
     };
-    sdk = new RootSDK(mockClient as unknown as any);
+    sdk = new RootSDK(mockClient as unknown as Record<string, unknown>);
   });
 
   it('should initialize', () => {
