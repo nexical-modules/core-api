@@ -17,19 +17,7 @@ vi.mock('@/lib/core/config', () => ({
 }));
 
 vi.mock('@/lib/core/db', () => {
-  const mockModelProps = {
-    id: '1',
-    email: 'test@example.com',
-    name: 'test',
-    status: 'PENDING',
-    role: 'TEAM_MEMBER',
-    token: 'test-token',
-    expires: new Date(Date.now() + 86400000),
-    actorId: 'ne_pat_test',
-    lockedBy: 'ne_pat_test',
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  };
+  const mockModelProps = { id: 'coreDoc_test', name: 'Test' };
 
   const isExistenceCheck = (where: Record<string, unknown>): boolean => {
     if (!where) return false;
@@ -171,17 +159,7 @@ describe('CoreDocService', () => {
     it('should run getFullSchema successfully', async () => {
       const result = await (
         CoreDocService as unknown as Record<string, (...args: unknown[]) => unknown>
-      ).getFullSchema({
-        id: 'ne_pat_test',
-        email: 'test@example.com',
-        name: 'Test',
-        token: 'token',
-        teamId: '1',
-        role: 'TEAM_MEMBER',
-        status: 'PENDING',
-        password: 'password',
-        confirmPassword: 'password',
-      } as Record<string, unknown>);
+      ).getFullSchema({ id: 'coreDoc_test', name: 'Test' } as Record<string, unknown>);
       if (result && typeof result === 'object' && 'success' in result) {
         expect(
           (result as Record<string, unknown>).success,
@@ -198,17 +176,7 @@ describe('CoreDocService', () => {
       try {
         const result = await (
           CoreDocService as unknown as Record<string, (...args: unknown[]) => unknown>
-        ).getFullSchema({
-          id: 'ne_pat_test',
-          email: 'test@example.com',
-          name: 'Test',
-          token: 'token',
-          teamId: '1',
-          role: 'TEAM_MEMBER',
-          status: 'PENDING',
-          password: 'password',
-          confirmPassword: 'password',
-        } as Record<string, unknown>);
+        ).getFullSchema({ id: 'coreDoc_test', name: 'Test' } as Record<string, unknown>);
         if (result && typeof result === 'object' && 'success' in result) {
           expect(result.success).toBe(false);
         }
