@@ -7,7 +7,6 @@ import { SchemaRootAction } from '../../../../src/actions/schema-root';
 import { GET } from '../../../../src/pages/api/schema';
 vi.mock('../../../../src/actions/schema-root');
 vi.mock('@/lib/api/api-guard');
-
 describe('Root API - GET ../../../../src/pages/api/schema', () => {
   beforeEach(() => {
     vi.resetAllMocks();
@@ -15,9 +14,7 @@ describe('Root API - GET ../../../../src/pages/api/schema', () => {
   });
 
   it('should call SchemaRootAction and return success', async () => {
-    const query = ['GET', 'DELETE'].includes('GET'.toUpperCase())
-      ? `?id=${encodeURIComponent(String('test-id'))}`
-      : '';
+    const query = ['GET', 'DELETE'].includes('GET'.toUpperCase()) ? `?` : '';
     const fullUrl = 'http://localhost/api/test' + query;
 
     const mockContext = createMockAstroContext({
@@ -47,9 +44,7 @@ describe('Root API - GET ../../../../src/pages/api/schema', () => {
   });
 
   it('should return 400 when invalid input is provided (scaffold)', async () => {
-    const query = ['GET', 'DELETE'].includes('GET'.toUpperCase())
-      ? `?id=${encodeURIComponent(String('test-id'))}`
-      : '';
+    const query = ['GET', 'DELETE'].includes('GET'.toUpperCase()) ? `?` : '';
     const fullUrl = 'http://localhost/api/test' + query;
 
     const mockContext = createMockAstroContext({
@@ -73,9 +68,7 @@ describe('Root API - GET ../../../../src/pages/api/schema', () => {
   });
 
   it('should return 500 when action fails', async () => {
-    const query = ['GET', 'DELETE'].includes('GET'.toUpperCase())
-      ? `?id=${encodeURIComponent(String('test-id'))}`
-      : '';
+    const query = ['GET', 'DELETE'].includes('GET'.toUpperCase()) ? `?` : '';
     const fullUrl = 'http://localhost/api/test' + query;
 
     const mockContext = createMockAstroContext({
