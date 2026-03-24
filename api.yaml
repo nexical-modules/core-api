@@ -3,6 +3,6 @@ Root:
     verb: GET
     method: schema
     summary: Returns the aggregated OpenAPI schema.
-    role: anonymous
+    role: PUBLIC
     input: none
     output: unknown
