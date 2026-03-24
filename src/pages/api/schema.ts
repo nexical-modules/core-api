@@ -52,5 +52,6 @@ export const GET = defineApi(
         },
       },
     },
+    protected: false,
   },
 );
